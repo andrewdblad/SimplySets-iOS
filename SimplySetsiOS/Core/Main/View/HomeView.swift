@@ -29,6 +29,10 @@ struct HomeView: View {
                         
                         Image(systemName: "chevron.down")
                             .bold()
+                            .onAppear {
+                                // Call fetchExercises when the view appears
+                                exerciseViewModel.fetchExercises()
+                            }
                         
                         Spacer()
                         
@@ -36,7 +40,7 @@ struct HomeView: View {
                             Image(systemName: "gear")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundStyle(Color(.black))
+//                                .foregroundStyle(Color(.black))
                         }
                         .padding(.trailing, 10)
                     }
@@ -54,6 +58,7 @@ struct HomeView: View {
                             ForEach(exerciseViewModel.exercises) { exercise in
                                 NavigationLink(destination: SetsView(exercise: exercise)) {
                                     Text(exercise.name)
+                                        .padding(.vertical, 8)
                                 }
                             }
                         }
@@ -89,21 +94,14 @@ struct HomeView: View {
     }
     
     func addExercise() async {
-        do {
-            // Add exercise logic here
-            // You can use exerciseName which holds the input from the TextField
-            // Call the method from the view model to add the exercise
-            await exerciseViewModel.saveExercise(Exercise(name: exerciseName)) // Assuming Exercise has a 'name' property
-            // Reset exerciseName for next input
-            exerciseName = ""
-            // Dismiss the alert
-            isAddingExercise = false
-        } catch {
-            // Handle error
-            print("Failed to add exercise: \(error.localizedDescription)")
-            // Optionally, you can display an error message to the user
-        }
+        let newExercise = Exercise(name: exerciseName.capitalized) // Declare newExercise as var
+        await exerciseViewModel.saveExercise(newExercise)
+        // Reset exerciseName for next input
+        exerciseName = ""
+        // Dismiss the alert
+        isAddingExercise = false
     }
+
 }
 #Preview {
     HomeView()

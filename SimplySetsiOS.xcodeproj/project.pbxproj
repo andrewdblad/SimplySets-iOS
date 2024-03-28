@@ -23,6 +23,10 @@
 		3147A1072B9D4E19000F9EB9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 3147A1062B9D4E19000F9EB9 /* FirebaseFirestore */; };
 		3147A1092B9D4E19000F9EB9 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3147A1082B9D4E19000F9EB9 /* FirebaseFirestoreSwift */; };
 		3147A10B2B9D4E19000F9EB9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3147A10A2B9D4E19000F9EB9 /* FirebaseStorage */; };
+		31528DA52BAE1E6000D6C962 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31528DA42BAE1E5F00D6C962 /* Workout.swift */; };
+		31528DA72BAE254C00D6C962 /* ExerciseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31528DA62BAE254C00D6C962 /* ExerciseViewModel.swift */; };
+		31528DAE2BAE85C600D6C962 /* SetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31528DAD2BAE85C600D6C962 /* SetsView.swift */; };
+		31528DB12BB4A70800D6C962 /* AddSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31528DB02BB4A70800D6C962 /* AddSetView.swift */; };
 		31BE04122BA2219A00BB0F56 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BE04112BA2219A00BB0F56 /* HomeView.swift */; };
 		31BE04162BA2345800BB0F56 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BE04152BA2345800BB0F56 /* RootView.swift */; };
 /* End PBXBuildFile section */
@@ -41,6 +45,10 @@
 		3147A0C22B9CCBF8000F9EB9 /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		3147A0C42B9CCE25000F9EB9 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3147A1012B9D3FED000F9EB9 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		31528DA42BAE1E5F00D6C962 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		31528DA62BAE254C00D6C962 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
+		31528DAD2BAE85C600D6C962 /* SetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetsView.swift; sourceTree = "<group>"; };
+		31528DB02BB4A70800D6C962 /* AddSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetView.swift; sourceTree = "<group>"; };
 		31BE04112BA2219A00BB0F56 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		31BE04152BA2345800BB0F56 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				3147A0C42B9CCE25000F9EB9 /* User.swift */,
+				31528DA42BAE1E5F00D6C962 /* Workout.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -126,7 +135,7 @@
 		3147A0B62B9B9F4A000F9EB9 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				31BE04102BA2217B00BB0F56 /* Home */,
+				31BE04102BA2217B00BB0F56 /* Main */,
 				3147A0B82B9B9F98000F9EB9 /* Authentication */,
 				3147A0B92B9B9FB1000F9EB9 /* Profile */,
 				3147A0B72B9B9F80000F9EB9 /* Root */,
@@ -177,12 +186,31 @@
 			path = "View Model";
 			sourceTree = "<group>";
 		};
-		31BE04102BA2217B00BB0F56 /* Home */ = {
+		31528DA92BAE79AB00D6C962 /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				31528DA62BAE254C00D6C962 /* ExerciseViewModel.swift */,
+			);
+			path = "View Model";
+			sourceTree = "<group>";
+		};
+		31528DAF2BB494CE00D6C962 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				31BE04112BA2219A00BB0F56 /* HomeView.swift */,
+				31528DAD2BAE85C600D6C962 /* SetsView.swift */,
+				31528DB02BB4A70800D6C962 /* AddSetView.swift */,
 			);
-			path = Home;
+			path = View;
+			sourceTree = "<group>";
+		};
+		31BE04102BA2217B00BB0F56 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				31528DAF2BB494CE00D6C962 /* View */,
+				31528DA92BAE79AB00D6C962 /* View Model */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,11 +299,15 @@
 				3147A0A82B9B9A22000F9EB9 /* ContentView.swift in Sources */,
 				31BE04122BA2219A00BB0F56 /* HomeView.swift in Sources */,
 				3147A0A62B9B9A22000F9EB9 /* SimplySetsiOSApp.swift in Sources */,
+				31528DAE2BAE85C600D6C962 /* SetsView.swift in Sources */,
+				31528DA72BAE254C00D6C962 /* ExerciseViewModel.swift in Sources */,
+				31528DB12BB4A70800D6C962 /* AddSetView.swift in Sources */,
 				3147A0C52B9CCE25000F9EB9 /* User.swift in Sources */,
 				3147A0C12B9CCA07000F9EB9 /* ProfileView.swift in Sources */,
 				3147A0BF2B9CC621000F9EB9 /* RegistrationView.swift in Sources */,
 				3147A0C32B9CCBF8000F9EB9 /* SettingsRowView.swift in Sources */,
 				3147A1022B9D3FED000F9EB9 /* AuthViewModel.swift in Sources */,
+				31528DA52BAE1E6000D6C962 /* Workout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +441,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SimplySetsiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 6277N22QA7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -437,6 +470,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SimplySetsiOS/Preview Content\"";
+				DEVELOPMENT_TEAM = 6277N22QA7;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

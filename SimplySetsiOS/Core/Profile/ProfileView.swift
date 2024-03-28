@@ -52,11 +52,6 @@ struct ProfileView: View {
                         SettingsRowView(imageName: "arrow.left.circle.fill", title: "Sign Out", tintColor: Color(.red))
                     })
                     
-                    Button(action: {
-                        print("deleted account")
-                    }, label: {
-                        SettingsRowView(imageName: "xmark.circle.fill", title: "Delete Account", tintColor: Color(.red))
-                    })
                 }
             }
         }

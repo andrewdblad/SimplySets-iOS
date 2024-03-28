@@ -16,9 +16,11 @@ class AuthViewModel: ObservableObject {
     @Published var userSession: FirebaseAuth.User?
     @Published var currentUser: User?
     @Published var signInError = false
+    var exerciseViewModel = ExerciseViewModel()
     
     init() {
         self.userSession = Auth.auth().currentUser
+        
         
         Task {
             await fetchUser()
@@ -30,6 +32,7 @@ class AuthViewModel: ObservableObject {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
             await fetchUser()
+            exerciseViewModel.fetchExercises()
         } catch {
             signInError = true
             print("DEBUG: Failed to log in with error \(error.localizedDescription)")

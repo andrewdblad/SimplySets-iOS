@@ -11,6 +11,7 @@ import Firebase
 @main
 struct SimplySetsiOSApp: App {
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject var exerciseViewModel = ExerciseViewModel()
     
     init() {
         FirebaseApp.configure()
@@ -20,6 +21,7 @@ struct SimplySetsiOSApp: App {
         WindowGroup {
             ContentView()
                 .environmentObject(authViewModel)
+                .environmentObject(exerciseViewModel)
         }
     }
 }

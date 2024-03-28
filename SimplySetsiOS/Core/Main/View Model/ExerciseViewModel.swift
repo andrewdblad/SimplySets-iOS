@@ -26,21 +26,38 @@ class ExerciseViewModel: ObservableObject {
     func saveExercise(_ exercise: Exercise) async {
         guard let userUid = userUid else { return }
         do {
-            // Encode the exercise data
-            let encodedExercise = try Firestore.Encoder().encode(exercise)
+            var exerciseWithID = exercise // Create a mutable copy of the exercise
+            exerciseWithID.id = UUID().uuidString // Set the id explicitly
+            let encodedExercise = try Firestore.Encoder().encode(exerciseWithID)
             
-            // Set data at the specified collection path
+            // Set data at the specified collection path with the explicitly set ID
             try await Firestore.firestore()
                 .collection("users").document(userUid)
-                .collection("exercises") // Nested collection
-                .document() // Firestore will generate a unique document ID
+                .collection("exercises")
+                .document(exerciseWithID.id)
                 .setData(encodedExercise)
         } catch {
             print("DEBUG: Failed to save exercise with error \(error.localizedDescription)")
         }
     }
 
-
+    func updateExercise(_ exercise: Exercise) async {
+        guard let userUid = userUid else { return }
+        do {
+            let encodedExercise = try Firestore.Encoder().encode(exercise)
+            
+            // Update the entire document with the modified exercise data
+            try await Firestore.firestore()
+                .collection("users")
+                .document(userUid)
+                .collection("exercises")
+                .document(exercise.id) // Use the exercise's ID to identify the document
+                .setData(encodedExercise)
+            fetchExercises()
+        } catch {
+            print("DEBUG: Failed to update exercise with error \(error.localizedDescription)")
+        }
+    }
 
 
     // Method to fetch exercises from Firestore
@@ -57,7 +74,30 @@ class ExerciseViewModel: ObservableObject {
         }
     }
     
+//    func chartDataForExercise(_ exercise: Exercise) -> [(x: Double, y: Double)] {
+//         var chartData: [(x: Double, y: Double)] = []
+//         
+//         // Extract sets data from the exercise
+//         guard let sets = exercise.sets else {
+//             return chartData
+//         }
+//         
+//         // Sort sets by date
+//         let sortedSets = sets.sorted(by: { $0.date < $1.date })
+//         
+//         // Iterate through sorted sets and add them to chartData
+//         for set in sortedSets {
+//             let x = Double(set.date.timeIntervalSince1970) // Convert date to Double
+//             let y = Double(set.weight) // Assuming weight is what you want to plot
+//             chartData.append((x: x, y: y))
+//         }
+//         
+//         return chartData
+//     }
+    
     func calcPr() {
         // calculate best weight for each exercise (use on home screen list)
     }
 }
+
+
