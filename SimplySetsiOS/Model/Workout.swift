@@ -26,14 +26,14 @@ struct Exercise: Identifiable, Codable {
         if self.sets == nil {
             self.sets = []
         }
-        var exerciseSet = ExerciseSet(reps: reps, weight: weight, date: Date())
+        let exerciseSet = ExerciseSet(reps: reps, weight: weight, date: Date())
         self.sets?.append(exerciseSet)
     }
 
 }
 
 
-struct ExerciseSet: Identifiable, Codable {
+struct ExerciseSet: Identifiable, Codable, Hashable {
     var id: String
     var reps: Int
     var weight: Int

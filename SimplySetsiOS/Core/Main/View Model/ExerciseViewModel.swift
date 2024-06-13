@@ -26,11 +26,11 @@ class ExerciseViewModel: ObservableObject {
     func saveExercise(_ exercise: Exercise) async {
         guard let userUid = userUid else { return }
         do {
-            var exerciseWithID = exercise // Create a mutable copy of the exercise
-            exerciseWithID.id = UUID().uuidString // Set the id explicitly
+            var exerciseWithID = exercise
+            exerciseWithID.id = UUID().uuidString
             let encodedExercise = try Firestore.Encoder().encode(exerciseWithID)
             
-            // Set data at the specified collection path with the explicitly set ID
+
             try await Firestore.firestore()
                 .collection("users").document(userUid)
                 .collection("exercises")
@@ -51,7 +51,7 @@ class ExerciseViewModel: ObservableObject {
                 .collection("users")
                 .document(userUid)
                 .collection("exercises")
-                .document(exercise.id) // Use the exercise's ID to identify the document
+                .document(exercise.id)
                 .setData(encodedExercise)
             fetchExercises()
         } catch {
@@ -74,26 +74,6 @@ class ExerciseViewModel: ObservableObject {
         }
     }
     
-//    func chartDataForExercise(_ exercise: Exercise) -> [(x: Double, y: Double)] {
-//         var chartData: [(x: Double, y: Double)] = []
-//         
-//         // Extract sets data from the exercise
-//         guard let sets = exercise.sets else {
-//             return chartData
-//         }
-//         
-//         // Sort sets by date
-//         let sortedSets = sets.sorted(by: { $0.date < $1.date })
-//         
-//         // Iterate through sorted sets and add them to chartData
-//         for set in sortedSets {
-//             let x = Double(set.date.timeIntervalSince1970) // Convert date to Double
-//             let y = Double(set.weight) // Assuming weight is what you want to plot
-//             chartData.append((x: x, y: y))
-//         }
-//         
-//         return chartData
-//     }
     
     func calcPr() {
         // calculate best weight for each exercise (use on home screen list)

@@ -16,6 +16,15 @@ struct SetsView: View {
         .init(date: Date(), weight: 5),
         .init(date: Date(), weight: 10)
     ]
+    var groupedSets: [String: [ExerciseSet]] {
+        let sortedSets = (exercise.sets ?? []).sorted(by: { $0.date > $1.date })
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return Dictionary(grouping: sortedSets) { set in
+            dateFormatter.string(from: set.date)
+        }
+    }
+
     var body: some View {
         VStack {
             HStack {
@@ -42,20 +51,25 @@ struct SetsView: View {
                     }
                 }
                 List {
-                    ForEach((exercise.sets ?? []).sorted(by: { $0.date > $1.date })) { set in
-                        LazyVStack {
-                            HStack {
-                                Text("\(set.reps) reps")
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Spacer()
-                                Text("\(set.weight) lbs")
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    ForEach(groupedSets.keys.sorted(by: >), id: \.self) { date in
+                        Section(header: Text(date)) {
+                            ForEach(groupedSets[date] ?? [], id: \.self) { set in
+                                LazyVStack {
+                                    HStack {
+                                        Text("\(set.reps) reps")
+                                            .frame(maxWidth: .infinity, alignment: .leading)
+                                        Spacer()
+                                        Text("\(set.weight) lbs")
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }
+                                }
+                                .cornerRadius(8)
+                                .padding(.horizontal)
                             }
                         }
-                        .cornerRadius(8)
-                        .padding(.horizontal)
                     }
                 }
+
 
             }
 
@@ -89,6 +103,8 @@ struct PreviewData: Identifiable {
     var date: Date
     var weight: Int
 }
+
+
 
 
 
